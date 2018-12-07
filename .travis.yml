@@ -4,6 +4,7 @@ services:
   - docker
 
 before_install:
+  - maven package
   - docker build -t mokassem/palindrome-message-checker . --no-cache
 script:
   - docker run -p8080:4567 mokassem/palindrome-message-checker
