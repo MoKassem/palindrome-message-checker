@@ -1,5 +1,11 @@
+sudo: requied
 language: java
-install:
-  - mvn install -DskipTests=false -Dmaven.javadoc.skip=true -B -V
+services:
+  - docker
+
+before_install:
+  - docker build mokassem/palindrome-message-checker . --no-cache
 script:
-  - mvn test -B
+  - docker run -p8080:4567 mokassem/palindrome-message-checker
+  on:
+    branch: develop
