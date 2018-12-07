@@ -5,6 +5,6 @@ services:
 
 before_install:
   - mvn package
-  - docker build -t mokassem/palindrome-message-checker . --no-cache
+  - docker build -t mokassem/palindrome-message-checker .
 script:
-  - docker run -p8080:4567 mokassem/palindrome-message-checker
+  - docker run -p9000:4567 mokassem/palindrome-message-checker
