@@ -8,3 +8,4 @@ before_install:
   - docker build -t mokassem/palindrome-message-checker .
 script:
   - docker run -p9000:4567 mokassem/palindrome-message-checker
+  - docker ps --all
