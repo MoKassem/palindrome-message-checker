@@ -1,10 +1,8 @@
 package infrastructure;
 
-import infrastructure.configs.spark.SparkBase;
+import com.mokassem.spark.SparkBase;
 import infrastructure.services.RootService;
-
-
-public class SparkMain extends SparkBase {
+public class SparkMain extends com.mokassem.spark.SparkBase {
 
     public static void main(String[] args) {
         SparkBase.start(new SparkMain());

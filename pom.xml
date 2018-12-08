@@ -17,7 +17,7 @@
     <repositories>
         <repository>
             <id>mokassem.mvn.repository</id>
-            <url>s3://mokassem.mvn.repository/snapshot</url>
+            <url>s3://mokassem.mvn.repository/release</url>
         </repository>
     </repositories>
 
@@ -38,7 +38,6 @@
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>HelloWorld</mainClass>
                                 </transformer>
-                                s
                             </transformers>
                         </configuration>
                     </execution>
@@ -117,8 +116,8 @@
             <version>1.4.196</version>
         </dependency>
         <dependency>
-            <groupId>com.mokassem.base</groupId>
-            <artifactId>palindrome-base-lib</artifactId>
+            <groupId>com.mokassem</groupId>
+            <artifactId>java-base-lib</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>

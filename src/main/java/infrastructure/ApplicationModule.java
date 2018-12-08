@@ -3,10 +3,9 @@ package infrastructure;
 import api.PalindromeMessageCheckerApi;
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
-
+import com.mokassem.guice.GuiceExtensions;
 import domain.message.MessageRepository;
 import domain.message.PalindromeMessageCheckerService;
-import infrastructure.configs.spark.GuiceExtensions;
 import infrastructure.sql.JooqMessageRepository;
 
 

@@ -5,16 +5,12 @@ import api.PalindromeMessageCheckerApi;
 import api.dto.MyMessage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import infrastructure.configs.spark.SparkConfig;
+import com.mokassem.spark.SparkConfig;
 
 import static spark.Spark.get;
 import static spark.Spark.internalServerError;
 import static spark.Spark.notFound;
 import static spark.Spark.post;
-import com.*;
-
-
-
 
 public class RootService implements SparkConfig {
     private final Gson gson;
@@ -23,15 +19,10 @@ public class RootService implements SparkConfig {
     public RootService(GsonBuilder gsonBuilder, PalindromeMessageCheckerApi api) {
         this.gson = gsonBuilder.create();
         this.api = api;
-
     }
-
-
 
     @Override
     public void configure() {
-
-
 
         get("/hello", (request, response) -> {
             response.status(404);
@@ -43,8 +34,6 @@ public class RootService implements SparkConfig {
             MyMessage myMessage = gson.fromJson(request.body(), MyMessage.class);
             api.createMessage(myMessage);
             return "kassemoo";
-
-
         });
 
         // Using Route
