@@ -1,0 +1,2 @@
+DROP TABLE restaurant_order_flmt_notification_service.amazon_tokens;
+DELETE FROM restaurant_order_flmt_notification_service.schema_version WHERE version = '001';
