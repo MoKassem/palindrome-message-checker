@@ -12,6 +12,9 @@
     <properties>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
+        <jooq.syntheticPrimaryKeys/>
+        <h2.database.url>jdbc:h2:${project.basedir}/target/jooq</h2.database.url>
+        <h2.database.user>jooq-generate</h2.database.user>
     </properties>
 
     <repositories>
@@ -42,6 +45,75 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>4.0</version>
+
+                <!-- Note that we're executing the Flyway plugin in the "generate-sources" phase -->
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>migrate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <!-- Note that we need to prefix the db/migration path with filesystem: to prevent Flyway
+                     from looking for our migration scripts only on the classpath -->
+                <configuration>
+                    <url>${h2.database.url};INIT=CREATE SCHEMA IF NOT EXISTS jooq\; SET SCHEMA jooq</url>
+                    <user>${h2.database.user}</user>
+                    <locations>
+                        <location>filesystem:src/main/resources/db/migration</location>
+                    </locations>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-codegen-maven</artifactId>
+                <version>3.9.1</version>
+
+                <!-- The jOOQ code generation plugin is also executed in the generate-sources phase, prior to compilation -->
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <!-- This is a minimal working configuration. See the manual's section about the code generator for more details -->
+                <configuration>
+                    <jdbc>
+                        <url>${h2.database.url}</url>
+                        <user>${h2.database.user}</user>
+                    </jdbc>
+                    <generator>
+                        <database>
+                            <includes>.*</includes>
+                            <inputSchema>JOOQ</inputSchema>
+                            <syntheticPrimaryKeys>${jooq.syntheticPrimaryKeys}</syntheticPrimaryKeys>
+                        </database>
+                        <target>
+                            <packageName>infrastructure.sql.generated</packageName>
+                            <directory>target/generated-sources/jooq-h2</directory>
+                        </target>
+                        <generate>
+                            <javaTimeTypes>true</javaTimeTypes>
+                        </generate>
+                    </generator>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.h2database</groupId>
+                        <artifactId>h2</artifactId>
+                        <version>1.4.187</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
         <extensions>
@@ -93,17 +165,17 @@
         <dependency>
             <groupId>org.jooq</groupId>
             <artifactId>jooq</artifactId>
-            <version>3.11.7</version>
+            <version>3.9.1</version>
         </dependency>
         <dependency>
             <groupId>org.jooq</groupId>
             <artifactId>jooq-meta</artifactId>
-            <version>3.11.7</version>
+            <version>3.9.1</version>
         </dependency>
         <dependency>
             <groupId>org.jooq</groupId>
             <artifactId>jooq-codegen</artifactId>
-            <version>3.11.7</version>
+            <version>3.9.1</version>
         </dependency>
         <dependency>
             <groupId>org.flywaydb</groupId>
@@ -116,9 +188,21 @@
             <version>1.4.196</version>
         </dependency>
         <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.44</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>com.mokassem</groupId>
             <artifactId>java-base-lib</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>7.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
