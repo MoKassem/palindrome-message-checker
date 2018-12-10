@@ -28,7 +28,9 @@ public class ApplicationModule extends AbstractModule implements ConfiguredModeE
 
         AppConfig config = getConfig();
 
-        PooledReadWriteFlyway flyway = new PooledReadWriteFlyway(config.getReadJdbcConfig(), config.getWriteJdbcConfig());
+        System.out.println(config.getReadJdbcConfig());
+
+        PooledReadWriteFlyway flyway = new PooledReadWriteFlyway(config.getReadJdbcConfig());
         flyway.migrate();
 
         bind(JooqContext.class).toInstance(new JooqContext(

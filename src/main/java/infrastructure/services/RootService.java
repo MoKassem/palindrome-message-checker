@@ -29,7 +29,7 @@ public class RootService implements SparkConfig {
     @Override
     public void configure() {
 
-        get("/message", (request, response) -> {
+        get("/messages", (request, response) -> {
             response.type("application/json; charset=utf-8");
             MessageQuery query;
             int queryMessageNumber;

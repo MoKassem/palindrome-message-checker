@@ -8,6 +8,4 @@ public interface AppConfig extends Config {
     JdbcConfig getReadJdbcConfig();
 
     JdbcConfig getWriteJdbcConfig();
-
-
 }

@@ -102,42 +102,42 @@ public class JooqMessageRepositoryTest {
 //        assertThat(tokensByIds.size(), is(1));
 //    }
 
-    @Test
-    public void save_doesNotThrowException_whenSavingTokenTwice() {
-
-        String str = "Too hot to hoot.";
-        System.out.println(str.length() / 2);
-
-
-        str = str.toLowerCase().replaceAll("[^A-Za-z0-9]", "");
-
-
-        Message token1 = Message.builder().messageId("fd").content("fdsfds").ispalindrome(true).createdTime(Instant.now()).build();
-        System.out.println(token1);
-
-        repository().save(token1);
-        repository().save(token1);
-    }
-
-
-   @Test
-    public void save_savesTokenProperly() {
-
-        Message token1 = Message.builderForTest().ispalindrome(true).build();
-
-        Message token2 = Message.builderForTest().ispalindrome(false).build();
-
-        System.out.println(token1);
-
-        repository().save(token1);
-        repository().save(token2);
-
-        Optional<Message> result = repository().find(ReadContext.SYNC_NOT_REQUIRED, MessageQuery.builder().isPalindeome(Optional.of(false)).build())
-                                               .stream().findFirst();
-
-        assertThat(result.isPresent(), is(true));
-        assertThat(result.get(), is(token2));
-    }
+//    @Test
+//    public void save_doesNotThrowException_whenSavingTokenTwice() {
+//
+//        String str = "Too hot to hoot.";
+//        System.out.println(str.length() / 2);
+//
+//
+//        str = str.toLowerCase().replaceAll("[^A-Za-z0-9]", "");
+//
+//
+//        Message token1 = Message.builder().messageId("fd").content("fdsfds").ispalindrome(true).createdTime(Instant.now()).build();
+//        System.out.println(token1);
+//
+//        repository().save(token1);
+//        repository().save(token1);
+//    }
+//
+//
+//   @Test
+//    public void save_savesTokenProperly() {
+//
+//        Message token1 = Message.builderForTest().ispalindrome(true).build();
+//
+//        Message token2 = Message.builderForTest().ispalindrome(false).build();
+//
+//        System.out.println(token1);
+//
+//        repository().save(token1);
+//        repository().save(token2);
+//
+//        Optional<Message> result = repository().find(ReadContext.SYNC_NOT_REQUIRED, MessageQuery.builder().isPalindeome(Optional.of(false)).build())
+//                                               .stream().findFirst();
+//
+//        assertThat(result.isPresent(), is(true));
+//        assertThat(result.get(), is(token2));
+//    }
 
 //    @Test
 //    public void find_returnsTokensByUserIdAndUserType() {

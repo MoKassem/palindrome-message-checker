@@ -4,21 +4,21 @@ import com.mokassem.sql.JdbcConfig;
 
 public class DevConfig implements AppConfig {
 
-    @Override
-    public JdbcConfig getReadJdbcConfig() {
+    public JdbcConfig getJdbcConfig() {
         return new JdbcConfig(
-                "jdbc:mysql://restaurant-order-fulfillment.rds.dev.skipinternal.com/restaurant_order_flmt_notification_service",
-                "j2_restaurant_order_flmt_ns",
-                "2}>._(vBz+}QuWnGfpa)",
+                "jdbc:mysql://localhost:3306/palindrome_checker?autoReconnect=true&useSSL=false",
+                "palindromechecker",
+                "password",
                 false);
     }
 
     @Override
+    public JdbcConfig getReadJdbcConfig() {
+        return getJdbcConfig();
+    }
+
+    @Override
     public JdbcConfig getWriteJdbcConfig() {
-        return new JdbcConfig(
-                "jdbc:mysql://restaurant-order-fulfillment.rds.dev.skipinternal.com/restaurant_order_flmt_notification_service",
-                "j2_restaurant_order_flmt_ns",
-                "2}>._(vBz+}QuWnGfpa)",
-                false);
+        return getJdbcConfig();
     }
 }
